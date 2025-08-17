@@ -40,11 +40,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":remoterepository"))
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
-    
-    implementation(project(":domain"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

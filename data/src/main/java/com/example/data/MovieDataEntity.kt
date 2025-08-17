@@ -1,8 +1,6 @@
 package com.example.data
 
-import com.example.domain.MovieDomainEntity
-
-data class MovieDataEntity(
+data class MovieDataEntity(//todo use or remove
     val title: String,
     val year: String,
     val imdbID: String,
@@ -10,5 +8,3 @@ data class MovieDataEntity(
     val poster: String,
     val isFavorite: Boolean
 )
-
-fun MovieDataEntity.toDomain() = MovieDomainEntity(title = title, year=  year,imdbID = imdbID, type = type, poster =  poster, isFavorite =  isFavorite)
