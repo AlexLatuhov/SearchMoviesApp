@@ -3,4 +3,6 @@
     <string name="welcome_message">Enter some text to search movies</string>
     <string name="error_during_request">Error during request</string>
     <string name="search_movies">Search movies</string>
+    <string name="year_of_release">Year of release: %s</string>
+    <string name="type">Type: %s</string>
 </resources>

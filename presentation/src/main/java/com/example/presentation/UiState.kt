@@ -5,6 +5,10 @@ sealed class UiState {
     class Error(val message: String) : UiState()
     object DefaultError : UiState()
     object WelcomeMessage : UiState()
-    data class Success(val movies: List<MovieUiEntity>, var openedMovie: MovieUiEntity? = null) :
+    data class Success(
+        val movies: List<MovieUiEntity>,
+        var openedMovie: MovieUiEntity? = null,
+        var visibleOpened: Boolean = false
+    ) :
         UiState()
 }

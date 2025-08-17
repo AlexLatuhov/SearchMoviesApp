@@ -21,7 +21,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 fun MoviesList(
     movies: List<MovieUiEntity>,
     emailLazyListState: LazyListState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToDetail: (String) -> Unit
 ) {
 
     LazyColumn(
@@ -31,7 +32,11 @@ fun MoviesList(
         state = emailLazyListState,
     ) {
         itemsIndexed(items = movies) { index, movie ->
-            MoviesListItem(movie = movie)
+            MoviesListItem(
+                movie = movie,
+                navigateToDetail = { id ->
+                    navigateToDetail(id)
+                })
         }
         item {
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))

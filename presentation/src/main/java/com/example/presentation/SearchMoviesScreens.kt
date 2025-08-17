@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.presentation.moviedetails.MovieDetailsScreen
 import com.example.presentation.movieslist.MoviesList
 import com.example.presentation.movieslist.MoviesSearchBar
 import com.example.uicomponents.Message
@@ -23,9 +24,10 @@ import com.example.uicomponents.Message
 fun SearchMoviesScreens(
     uiState: UiState,
     modifier: Modifier = Modifier,
-    searchMovies: (String) -> Unit
+    searchMovies: (String) -> Unit,
+    closeDetailScreen: () -> Unit,
+    navigateToDetail: (String) -> Unit,
 ) {
-
     val moviesLazyListState = rememberLazyListState()
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -33,7 +35,9 @@ fun SearchMoviesScreens(
             uiState = uiState,
             moviesLazyListState = moviesLazyListState,
             modifier = Modifier.fillMaxSize(),
-            searchMovies = searchMovies
+            searchMovies = searchMovies,
+            closeDetailScreen = closeDetailScreen,
+            navigateToDetail = navigateToDetail
         )
     }
 }
@@ -43,7 +47,9 @@ fun MoviesAppContent(
     uiState: UiState,
     moviesLazyListState: LazyListState,
     modifier: Modifier = Modifier,
-    searchMovies: (String) -> Unit
+    searchMovies: (String) -> Unit,
+    closeDetailScreen: () -> Unit,
+    navigateToDetail: (String) -> Unit
 ) {
     Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
 
@@ -59,8 +65,11 @@ fun MoviesAppContent(
                 MoviesList(
                     movies = uiState.movies,
                     emailLazyListState = moviesLazyListState,
-                    modifier = modifier
+                    modifier = modifier, navigateToDetail = navigateToDetail
                 )
+                MovieDetailsScreen(
+                    uiState.openedMovie
+                ) { closeDetailScreen() }
             }
 
             is UiState.WelcomeMessage -> {

@@ -9,6 +9,7 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -34,6 +35,28 @@ class MoviesViewModel @Inject constructor(private val searchMoviesUseCase: Searc
                         UiState.DefaultError
                     }
                 }
+            }
+        }
+    }
+
+    fun setOpenedMovie(imdbID: String) {
+        _uiState.update { state ->
+            when (state) {
+                is UiState.Success -> {
+                    val movie = state.movies.firstOrNull { it.imdbID == imdbID }
+                    state.copy(openedMovie = movie)
+                }
+
+                else -> state
+            }
+        }
+    }
+
+    fun closeDetailScreen() {
+        _uiState.update { state ->
+            when (state) {
+                is UiState.Success -> state.copy(openedMovie = null)
+                else -> state
             }
         }
     }

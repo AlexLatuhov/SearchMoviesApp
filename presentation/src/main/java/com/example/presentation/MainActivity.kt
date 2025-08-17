@@ -29,7 +29,13 @@ class MainActivity : ComponentActivity() {
                         uiState = uiState,
                         searchMovies = { searchText ->
                             viewModel.searchMovies(searchText)
-                        }
+                        },
+                        closeDetailScreen = {
+                            viewModel.closeDetailScreen()
+                        },
+                        navigateToDetail = { emailId ->
+                            viewModel.setOpenedMovie(emailId)
+                        },
                     )
                 }
             }

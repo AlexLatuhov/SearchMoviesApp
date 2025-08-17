@@ -22,6 +22,7 @@ import com.example.presentation.MovieUiEntity
 @Composable
 fun MoviesListItem(
     movie: MovieUiEntity,
+    navigateToDetail: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -30,7 +31,7 @@ fun MoviesListItem(
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .clip(CardDefaults.shape)
             .clickable(
-                onClick = { }//todo navigate to details screen
+                onClick = { navigateToDetail(movie.imdbID) }
             )
             .clip(CardDefaults.shape),
         colors = CardDefaults.cardColors(
