@@ -1,4 +1,4 @@
-package com.example.searchmoviesapp
+package com.example.presentation
 
 import com.example.domain.MovieDomainEntity
 

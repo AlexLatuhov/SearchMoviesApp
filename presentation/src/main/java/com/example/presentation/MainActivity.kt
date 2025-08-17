@@ -1,4 +1,4 @@
-package com.example.searchmoviesapp
+package com.example.presentation
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.searchmoviesapp.ui.theme.SearchMoviesAppTheme
+import com.example.presentation.theme.SearchMoviesAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.example.searchmoviesapp
+package com.example.presentation
 
 sealed class UiState {
     object Loading : UiState()

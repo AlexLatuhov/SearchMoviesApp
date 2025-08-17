@@ -1,4 +1,4 @@
-package com.example.searchmoviesapp
+package com.example.searchmoviesapp.di.modules
 
 import com.example.data.RepositoryImpl
 import com.example.domain.Repository
