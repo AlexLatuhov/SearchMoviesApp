@@ -1,6 +1,6 @@
 package com.example.presentation
 
-import com.example.domain.MovieDomainEntity
+import com.example.domain.movies.MovieDomainEntity
 
 data class MovieUiEntity(
     val title: String,

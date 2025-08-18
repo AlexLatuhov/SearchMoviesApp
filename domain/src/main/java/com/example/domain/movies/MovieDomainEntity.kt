@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.movies
 
 data class MovieDomainEntity(
     val title: String,

@@ -1,7 +1,7 @@
 package com.example.searchmoviesapp.di.modules
 
 import com.example.data.RepositoryImpl
-import com.example.domain.Repository
+import com.example.domain.movies.Repository
 import com.example.localrepository.FavoritesRepository
 import com.example.remoterepository.OmdbRepository
 import dagger.Module

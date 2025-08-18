@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MovieListApp</string>
+    <string name="search_movies">Search movies</string>
+    <string name="welcome_message">Enter some text to search movies</string>
+    <string name="back_button">Back</string>
+    <string name="search">Search</string>
+    <string name="favorite">Favorite</string>
+    <string name="unfavorite">Unfavorite</string>
+    <string name="error_during_request">Error during request</string>
+    <string name="year_of_release">Year of release: %s</string>
+    <string name="type">Type: %s</string>
+    <string name="ad_icon">Ad icon</string>
+    <string name="learn_more">Learn more</string>
+</resources>

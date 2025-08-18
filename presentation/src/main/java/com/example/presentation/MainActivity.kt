@@ -8,11 +8,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.adsdkapi.InterstitialAdApiDisplay
+import com.example.presentation.ad.InterstitialAdUiState
 import com.example.presentation.theme.ContrastAwareTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var interstitialAdApiDisplay: InterstitialAdApiDisplay
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,8 +26,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: MoviesViewModel = hiltViewModel()
 
+            viewModel.loadInterstitialAd()//todo add condition to load
+
             ContrastAwareTheme {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                val interstitialAdState by viewModel.interstitialAdUiState.collectAsStateWithLifecycle()
+                if (interstitialAdState is InterstitialAdUiState.Ready) {
+                    interstitialAdApiDisplay.showInterstitialAd(this)
+                }
 
                 Surface {
                     SearchMoviesScreens(

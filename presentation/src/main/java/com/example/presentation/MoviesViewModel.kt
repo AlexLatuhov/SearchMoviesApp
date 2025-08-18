@@ -2,10 +2,13 @@ package com.example.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.MovieDomainEntity
-import com.example.domain.ResponseResult
-import com.example.domain.SearchMoviesUseCase
-import com.example.domain.ToggleFavoriteUseCase
+import com.example.domain.ad.InterstitialAdUseCase
+import com.example.domain.movies.MovieDomainEntity
+import com.example.domain.movies.ResponseResult
+import com.example.domain.movies.SearchMoviesUseCase
+import com.example.domain.movies.ToggleFavoriteUseCase
+import com.example.presentation.ad.InterstitialAdUiState
+import com.example.presentation.ad.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Job
@@ -18,16 +21,29 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val searchMoviesUseCase: SearchMoviesUseCase,
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase
-) :
-    ViewModel() {
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val interstitialAdUseCase: InterstitialAdUseCase
+) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.WelcomeMessage)
     val uiState: StateFlow<UiState> = _uiState
+
+    private val _interstitialAdUiState = MutableStateFlow<InterstitialAdUiState>(
+        InterstitialAdUiState.None
+    )
+    val interstitialAdUiState: StateFlow<InterstitialAdUiState> = _interstitialAdUiState
     private var searchJob: Job? = null
 
     fun toggleFavorite(imdbID: String) {
         viewModelScope.launch {
             toggleFavoriteUseCase.toggleFavorite(imdbID)
+        }
+    }
+
+    fun loadInterstitialAd() {
+        viewModelScope.launch {
+            interstitialAdUseCase.load().collect { result ->
+                _interstitialAdUiState.value = result.toUi()
+            }
         }
     }
 

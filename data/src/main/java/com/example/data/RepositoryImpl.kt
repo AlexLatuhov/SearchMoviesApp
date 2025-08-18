@@ -1,7 +1,7 @@
 package com.example.data
 
-import com.example.domain.Repository
-import com.example.domain.ResponseResult
+import com.example.domain.movies.Repository
+import com.example.domain.movies.ResponseResult
 import com.example.localrepository.FavoritesRepository
 import com.example.remoterepository.OmdbRepository
 import com.example.remoterepository.OmdbResponse

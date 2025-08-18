@@ -1,8 +1,10 @@
 package com.example.searchmoviesapp.di.modules
 
-import com.example.domain.Repository
-import com.example.domain.SearchMoviesUseCase
-import com.example.domain.ToggleFavoriteUseCase
+import com.example.adsdkapi.InterstitialAdApiPreparer
+import com.example.domain.ad.InterstitialAdUseCase
+import com.example.domain.movies.Repository
+import com.example.domain.movies.SearchMoviesUseCase
+import com.example.domain.movies.ToggleFavoriteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,4 +23,10 @@ class UseCasesModule {
     @ViewModelScoped
     fun provideToggleFavoritesUseCase(repository: Repository): ToggleFavoriteUseCase =
         ToggleFavoriteUseCase(repository)
+
+
+    @Provides
+    @ViewModelScoped
+    fun provideInterstitialAdApiPreparer(interstitialAdApi: InterstitialAdApiPreparer): InterstitialAdUseCase =
+        InterstitialAdUseCase(interstitialAdApi)
 }

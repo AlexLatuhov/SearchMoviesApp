@@ -49,6 +49,8 @@ dependencies {
     implementation(project(":presentation"))
     implementation(project(":remoterepository"))
     implementation(project(":localrepository"))
+    implementation(project(":AdMobSdk"))
+    implementation(project(":AdSdkApi"))
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

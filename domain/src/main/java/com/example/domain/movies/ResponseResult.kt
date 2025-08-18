@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.movies
 
 sealed class ResponseResult {
     data class Success(val search: List<MovieDomainEntity>) : ResponseResult()

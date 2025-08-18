@@ -47,6 +47,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":AdSdkApi"))
     implementation(project(":uicomponents"))
 
     implementation(libs.hilt.android)

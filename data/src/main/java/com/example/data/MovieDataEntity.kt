@@ -1,6 +1,6 @@
 package com.example.data
 
-import com.example.domain.MovieDomainEntity
+import com.example.domain.movies.MovieDomainEntity
 import com.example.remoterepository.Movie
 
 data class MovieDataEntity(
