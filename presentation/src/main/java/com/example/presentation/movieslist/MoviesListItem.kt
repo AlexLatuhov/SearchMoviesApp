@@ -16,14 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.presentation.MovieUiEntity
+import com.example.uicomponents.FavoriteButton
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MoviesListItem(
     movie: MovieUiEntity,
-    navigateToDetail: (String) -> Unit,
-    modifier: Modifier = Modifier
+    navigateToDetail: () -> Unit,
+    modifier: Modifier = Modifier,
+    onToggle: () -> Unit
 ) {
 
     Card(
@@ -31,7 +33,7 @@ fun MoviesListItem(
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .clip(CardDefaults.shape)
             .clickable(
-                onClick = { navigateToDetail(movie.imdbID) }
+                onClick = { navigateToDetail() }
             )
             .clip(CardDefaults.shape),
         colors = CardDefaults.cardColors(
@@ -53,6 +55,10 @@ fun MoviesListItem(
                         .padding(horizontal = 12.dp, vertical = 4.dp),
                     text = movie.title + " " + movie.year,
                     style = MaterialTheme.typography.labelMedium,
+                )
+                FavoriteButton(
+                    isFavorite = movie.isFavorite,
+                    onToggle = onToggle
                 )
             }
         }

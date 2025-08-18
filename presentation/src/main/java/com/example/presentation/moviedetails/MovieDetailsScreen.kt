@@ -20,7 +20,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 @Composable
 fun MovieDetailsScreen(
     openedMovie: MovieUiEntity?,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    onToggle: (String) -> Unit,
 ) {
     var visible by remember { mutableStateOf(openedMovie != null) }
     LaunchedEffect(openedMovie) {
@@ -52,9 +53,12 @@ fun MovieDetailsScreen(
         exit = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 }),
     ) {
         openedMovie?.let { movie ->
-            MovieDetails(movie = movie) {
-                visible = false
-            }
+            MovieDetails(
+                movie = movie, onBackPressed = {
+                    visible = false
+                },
+                onToggle = { onToggle(openedMovie.imdbID) }
+            )
         }
     }
 }

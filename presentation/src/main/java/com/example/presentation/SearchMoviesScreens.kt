@@ -27,6 +27,7 @@ fun SearchMoviesScreens(
     searchMovies: (String) -> Unit,
     closeDetailScreen: () -> Unit,
     navigateToDetail: (String) -> Unit,
+    onToggle: (String) -> Unit
 ) {
     val moviesLazyListState = rememberLazyListState()
 
@@ -37,7 +38,8 @@ fun SearchMoviesScreens(
             modifier = Modifier.fillMaxSize(),
             searchMovies = searchMovies,
             closeDetailScreen = closeDetailScreen,
-            navigateToDetail = navigateToDetail
+            navigateToDetail = navigateToDetail,
+            onToggle = onToggle
         )
     }
 }
@@ -49,7 +51,8 @@ fun MoviesAppContent(
     modifier: Modifier = Modifier,
     searchMovies: (String) -> Unit,
     closeDetailScreen: () -> Unit,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (String) -> Unit,
+    onToggle: (String) -> Unit
 ) {
     Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
 
@@ -65,11 +68,14 @@ fun MoviesAppContent(
                 MoviesList(
                     movies = uiState.movies,
                     emailLazyListState = moviesLazyListState,
-                    modifier = modifier, navigateToDetail = navigateToDetail
+                    modifier = modifier, navigateToDetail = navigateToDetail,
+                    onToggle = onToggle
                 )
                 MovieDetailsScreen(
-                    uiState.openedMovie
-                ) { closeDetailScreen() }
+                    uiState.openedMovie,
+                    onClose = { closeDetailScreen() },
+                    onToggle = onToggle
+                )
             }
 
             is UiState.WelcomeMessage -> {

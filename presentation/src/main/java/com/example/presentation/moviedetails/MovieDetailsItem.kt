@@ -15,11 +15,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.presentation.MovieUiEntity
 import com.example.presentation.R
+import com.example.uicomponents.FavoriteButton
 import com.example.uicomponents.PosterImage
 
 @Composable
 fun MovieDetailsItem(
-    movie: MovieUiEntity, modifier: Modifier = Modifier
+    movie: MovieUiEntity, modifier: Modifier = Modifier,
+    onToggle: () -> Unit
 ) {
 
     Card(
@@ -51,6 +53,10 @@ fun MovieDetailsItem(
                         style = MaterialTheme.typography.labelMedium,
                     )
                 }
+                FavoriteButton(
+                    isFavorite = movie.isFavorite,
+                    onToggle = onToggle
+                )
             }
         }
     }

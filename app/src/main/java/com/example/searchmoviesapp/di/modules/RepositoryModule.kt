@@ -2,8 +2,8 @@ package com.example.searchmoviesapp.di.modules
 
 import com.example.data.RepositoryImpl
 import com.example.domain.Repository
-import com.example.domain.SearchMoviesUseCase
-import com.example.remoterepository.OmdbRepositoryImpl
+import com.example.localrepository.FavoritesRepository
+import com.example.remoterepository.OmdbRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,11 +16,10 @@ object RepositoryModule {
 
     @Provides
     @ViewModelScoped
-    fun provideRepository(omdbRepositoryImpl: OmdbRepositoryImpl): Repository =
-        RepositoryImpl(omdbRepositoryImpl)
+    fun provideRepository(
+        omdbRepository: OmdbRepository,
+        favoritesRepository: FavoritesRepository
+    ): Repository =
+        RepositoryImpl(omdbRepository, favoritesRepository)
 
-    @Provides
-    @ViewModelScoped
-    fun provideSearchMoviesUseCase(repository: Repository): SearchMoviesUseCase =
-        SearchMoviesUseCase(repository)
 }

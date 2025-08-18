@@ -18,7 +18,8 @@ import com.example.uicomponents.AppBarWithBack
 fun MovieDetails(
     movie: MovieUiEntity,
     modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onToggle: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -28,7 +29,7 @@ fun MovieDetails(
         AppBarWithBack(movie.title) {
             onBackPressed()
         }
-        MovieDetailsItem(movie = movie)
+        MovieDetailsItem(movie = movie, onToggle = onToggle)
         Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
     }
 }

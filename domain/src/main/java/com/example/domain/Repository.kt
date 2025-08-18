@@ -1,5 +1,8 @@
 package com.example.domain
 
+import kotlinx.coroutines.flow.Flow
+
 interface Repository {
-    suspend fun searchMovies(query: String): RequestResponse
+    fun searchMovies(query: String): Flow<ResponseResult>
+    suspend fun toggleFavorite(itemId: String)
 }

@@ -14,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,9 +32,12 @@ class MainActivity : ComponentActivity() {
                         closeDetailScreen = {
                             viewModel.closeDetailScreen()
                         },
-                        navigateToDetail = { emailId ->
-                            viewModel.setOpenedMovie(emailId)
+                        navigateToDetail = { movieId ->
+                            viewModel.setOpenedMovie(movieId)
                         },
+                        onToggle = { movieId ->
+                            viewModel.toggleFavorite(movieId)
+                        }
                     )
                 }
             }

@@ -22,7 +22,8 @@ fun MoviesList(
     movies: List<MovieUiEntity>,
     emailLazyListState: LazyListState,
     modifier: Modifier = Modifier,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (String) -> Unit,
+    onToggle: (String) -> Unit
 ) {
 
     LazyColumn(
@@ -34,9 +35,10 @@ fun MoviesList(
         itemsIndexed(items = movies) { index, movie ->
             MoviesListItem(
                 movie = movie,
-                navigateToDetail = { id ->
-                    navigateToDetail(id)
-                })
+                navigateToDetail = {
+                    navigateToDetail(movie.imdbID)
+                }, onToggle = { onToggle(movie.imdbID) }
+            )
         }
         item {
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))

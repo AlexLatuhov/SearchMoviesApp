@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/localrepository" />
             <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/remoterepository" />
             <option value="$PROJECT_DIR$/uicomponents" />
