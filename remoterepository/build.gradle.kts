@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 android.buildFeatures.buildConfig = true
 
@@ -10,6 +11,14 @@ plugins {
     alias(libs.plugins.hilt)
 }
 
+val localProps = Properties().apply {
+    val localFile = rootProject.file("local.properties")
+    if (localFile.exists()) {
+        load(localFile.inputStream())
+    }
+}
+
+
 android {
     namespace = "com.example.remoterepository"
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -20,7 +29,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
         buildConfigField("String", "OMDB_BASE_URL", "\"https://www.omdbapi.com/\"")
-        buildConfigField("String", "OMDB_API_KEY", "\"9278e7bc\"")
+
+        val apiKey = localProps.getProperty("OMDB_API_KEY") as String
+        buildConfigField("String", "OMDB_API_KEY", "\"$apiKey\"")
     }
 
     buildTypes {
