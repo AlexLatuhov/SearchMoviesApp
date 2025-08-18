@@ -2,6 +2,7 @@ package com.example.searchmoviesapp.di.modules
 
 import com.example.adsdkapi.InterstitialAdApiPreparer
 import com.example.domain.ad.InterstitialAdUseCase
+import com.example.domain.ad.LaunchCounter
 import com.example.domain.movies.Repository
 import com.example.domain.movies.SearchMoviesUseCase
 import com.example.domain.movies.ToggleFavoriteUseCase
@@ -27,6 +28,9 @@ class UseCasesModule {
 
     @Provides
     @ViewModelScoped
-    fun provideInterstitialAdApiPreparer(interstitialAdApi: InterstitialAdApiPreparer): InterstitialAdUseCase =
-        InterstitialAdUseCase(interstitialAdApi)
+    fun provideInterstitialAdApiPreparer(
+        interstitialAdApi: InterstitialAdApiPreparer,
+        launchCounter: LaunchCounter
+    ): InterstitialAdUseCase =
+        InterstitialAdUseCase(interstitialAdApi, launchCounter)
 }

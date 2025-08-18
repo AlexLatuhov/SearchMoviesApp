@@ -52,6 +52,8 @@ dependencies {
     implementation(project(":AdMobSdk"))
     implementation(project(":AdSdkApi"))
 
+    implementation(libs.androidx.lifecycle.process)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 

@@ -17,9 +17,7 @@ object RepositoryModule {
     @Provides
     @ViewModelScoped
     fun provideRepository(
-        omdbRepository: OmdbRepository,
-        favoritesRepository: FavoritesRepository
-    ): Repository =
-        RepositoryImpl(omdbRepository, favoritesRepository)
+        omdbRepository: OmdbRepository, favoritesRepository: FavoritesRepository
+    ): Repository = RepositoryImpl(omdbRepository, favoritesRepository)
 
 }

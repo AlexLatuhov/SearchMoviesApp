@@ -25,8 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val viewModel: MoviesViewModel = hiltViewModel()
-
-            viewModel.loadInterstitialAd()//todo add condition to load
+            viewModel.loadInterstitialAd()
 
             ContrastAwareTheme {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
