@@ -63,7 +63,6 @@ android {
 dependencies {
     implementation(project(":AdSdkApi"))
 
-    implementation(libs.play.services.ads.v2230)
     implementation(libs.play.services.ads)
 
     implementation(libs.hilt.android)
