@@ -27,14 +27,14 @@ class NativeAdMobRepository @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) : NativeAdsRepository {
 
-    var noError = true
+    var failed = 0
     val preparedAds = LinkedBlockingQueue<NativeAd>()
     val adLoader = AdLoader.Builder(context, NATIVE_AD_UNIT_ID).forNativeAd { nativeAd ->
         preparedAds.put(nativeAd)
     }.withAdListener(object : AdListener() {
         override fun onAdFailedToLoad(loadAdError: LoadAdError) {
             Log.d("TEST", "onAdFailedToLoad!!!!")
-            noError = false
+            failed++
         }
     }).withNativeAdOptions(NativeAdOptions.Builder().build()).build()
 
@@ -44,10 +44,12 @@ class NativeAdMobRepository @Inject constructor(
         }
     }
 
+    private fun failedToLoad() = failed >= MAX_ADS_COUNT
+
     //load more ads than needed for a single display in order to be able to show them as quickly as possible.
     override fun provideTwoAds(): Flow<NativeAdState> =
         flow {
-            noError = true
+            failed = 0
             var isEmitted = false
             do {
                 preloadAds()
@@ -61,10 +63,11 @@ class NativeAdMobRepository @Inject constructor(
                         )
                     )
                     isEmitted = true
-                } else if (noError) {
+                } else if (failedToLoad()) {
                     emit(NativeAdState.Failed)
+                    isEmitted = true
                 }
                 delay(PRELOAD_CYCLE_BREAK_IN_MS)
-            } while (!isEmitted && noError)
+            } while (!isEmitted)
         }
 }
