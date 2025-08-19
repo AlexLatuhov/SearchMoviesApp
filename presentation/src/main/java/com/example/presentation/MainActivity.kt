@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.adsdkapi.InterstitialAdApiDisplay
+import com.example.adsdkapi.NativeAdApiViewFactory
 import com.example.presentation.ad.InterstitialAdUiState
 import com.example.presentation.theme.ContrastAwareTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +20,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var interstitialAdApiDisplay: InterstitialAdApiDisplay
+
+    @Inject
+    lateinit var nativeAdApiViewFactory: NativeAdApiViewFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +52,8 @@ class MainActivity : ComponentActivity() {
                         },
                         onToggle = { movieId ->
                             viewModel.toggleFavorite(movieId)
-                        }
+                        },
+                        nativeAdApiViewFactory = nativeAdApiViewFactory
                     )
                 }
             }

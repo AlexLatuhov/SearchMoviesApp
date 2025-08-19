@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 const val INTERSTITIAL_AD_UNIT_ID = BuildConfig.ADMOB_INTERSTITIAL_ID
-const val NATIVE_AD_UNIT_ID = BuildConfig.ADMOB_NATIVE_AD//todo use it
 
 class InterstitialAdMobManager @Inject constructor(
     private val context: Context

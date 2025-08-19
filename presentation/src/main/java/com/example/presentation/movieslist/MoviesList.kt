@@ -1,5 +1,6 @@
 package com.example.presentation.movieslist
 
+import android.view.View
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,19 +12,23 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.presentation.MovieUiEntity
+import androidx.compose.ui.viewinterop.AndroidView
+import com.example.adsdkapi.NativeAdApiViewFactory
+import com.example.presentation.SearchMovieUiListItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun MoviesList(
-    movies: List<MovieUiEntity>,
+    movies: List<SearchMovieUiListItem>,
     emailLazyListState: LazyListState,
     modifier: Modifier = Modifier,
     navigateToDetail: (String) -> Unit,
-    onToggle: (String) -> Unit
+    onToggle: (String) -> Unit,
+    nativeAdApiViewFactory: NativeAdApiViewFactory
 ) {
 
     LazyColumn(
@@ -32,16 +37,41 @@ fun MoviesList(
             .padding(top = 80.dp),
         state = emailLazyListState,
     ) {
-        itemsIndexed(items = movies) { index, movie ->
-            MoviesListItem(
-                movie = movie,
-                navigateToDetail = {
-                    navigateToDetail(movie.imdbID)
-                }, onToggle = { onToggle(movie.imdbID) }
-            )
+        itemsIndexed(items = movies) { index, movieSearchItem ->
+            when (movieSearchItem) {
+                is SearchMovieUiListItem.MovieUiListItem -> {
+                    val movie = movieSearchItem.movieUiEntity
+                    MoviesListItem(
+                        movie = movie,
+                        navigateToDetail = {
+                            navigateToDetail(movie.imdbID)
+                        }, onToggle = { onToggle(movie.imdbID) }
+                    )
+                }
+
+                is SearchMovieUiListItem.NativeAdUiListItem -> {
+                    NativeAdCard(
+                        adView = nativeAdApiViewFactory.createView(
+                            LocalContext.current,
+                            movieSearchItem.nativeAdEntity
+                        )
+                    )
+                }
+            }
         }
         item {
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
         }
     }
+}
+
+
+@Composable
+private fun NativeAdCard(modifier: Modifier = Modifier, adView: View) {
+    AndroidView(
+        modifier = modifier,
+        factory = { context ->
+            adView
+        }
+    )
 }

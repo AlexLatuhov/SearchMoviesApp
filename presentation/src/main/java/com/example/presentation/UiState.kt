@@ -6,7 +6,7 @@ sealed class UiState {
     object DefaultError : UiState()
     object WelcomeMessage : UiState()
     data class Success(
-        val movies: List<MovieUiEntity>,
+        val itemsList: List<SearchMovieUiListItem>,
         var openedMovie: MovieUiEntity? = null
     ) : UiState()
 }

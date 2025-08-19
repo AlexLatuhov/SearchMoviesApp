@@ -2,9 +2,9 @@ package com.example.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.DomainListItem
+import com.example.domain.ResponseResultDomain
 import com.example.domain.ad.InterstitialAdUseCase
-import com.example.domain.movies.MovieDomainEntity
-import com.example.domain.movies.ResponseResult
 import com.example.domain.movies.SearchMoviesUseCase
 import com.example.domain.movies.ToggleFavoriteUseCase
 import com.example.presentation.ad.InterstitialAdUiState
@@ -47,13 +47,16 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    private fun updateUiState(search: List<MovieDomainEntity>) {
-        val newMoviesUi = search.map { it.toUi() }
+    private fun updateUiState(search: List<DomainListItem>) {
+        val newMoviesUi = search.map { it.toMovieUiListItem() }
         _uiState.getAndUpdate { state ->
             when (state) {
                 is UiState.Success -> UiState.Success(
                     newMoviesUi,
-                    openedMovie = newMoviesUi.find { state.openedMovie?.imdbID == it.imdbID }
+                    openedMovie = newMoviesUi.filterIsInstance<SearchMovieUiListItem.MovieUiListItem>()
+                        .firstOrNull {
+                            it.movieUiEntity.imdbID == state.openedMovie?.imdbID
+                        }?.movieUiEntity
                 )
 
                 else -> UiState.Success(newMoviesUi)
@@ -68,8 +71,8 @@ class MoviesViewModel @Inject constructor(
 
             searchMoviesUseCase.searchMovies(searchText).collect { result ->
                 when (result) {
-                    is ResponseResult.Success -> updateUiState(result.search)
-                    is ResponseResult.Error -> {
+                    is ResponseResultDomain.Success -> updateUiState(result.searchResult)
+                    is ResponseResultDomain.Error -> {
                         val errorMessage = result.message
                         _uiState.value = if (errorMessage != null) {
                             UiState.Error(errorMessage)
@@ -86,8 +89,12 @@ class MoviesViewModel @Inject constructor(
         _uiState.update { state ->
             when (state) {
                 is UiState.Success -> {
-                    val movie = state.movies.firstOrNull { it.imdbID == imdbID }
-                    state.copy(openedMovie = movie)
+                    val movie =
+                        state.itemsList.filterIsInstance<SearchMovieUiListItem.MovieUiListItem>()
+                            .firstOrNull {
+                                it.movieUiEntity.imdbID == imdbID
+                            }
+                    state.copy(openedMovie = movie?.movieUiEntity)
                 }
 
                 else -> state

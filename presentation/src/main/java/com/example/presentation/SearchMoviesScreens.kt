@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.adsdkapi.NativeAdApiViewFactory
 import com.example.presentation.moviedetails.MovieDetailsScreen
 import com.example.presentation.movieslist.MoviesList
 import com.example.presentation.movieslist.MoviesSearchBar
@@ -27,7 +28,8 @@ fun SearchMoviesScreens(
     searchMovies: (String) -> Unit,
     closeDetailScreen: () -> Unit,
     navigateToDetail: (String) -> Unit,
-    onToggle: (String) -> Unit
+    onToggle: (String) -> Unit,
+    nativeAdApiViewFactory: NativeAdApiViewFactory
 ) {
     val moviesLazyListState = rememberLazyListState()
 
@@ -39,7 +41,8 @@ fun SearchMoviesScreens(
             searchMovies = searchMovies,
             closeDetailScreen = closeDetailScreen,
             navigateToDetail = navigateToDetail,
-            onToggle = onToggle
+            onToggle = onToggle,
+            nativeAdApiViewFactory = nativeAdApiViewFactory
         )
     }
 }
@@ -52,7 +55,8 @@ fun MoviesAppContent(
     searchMovies: (String) -> Unit,
     closeDetailScreen: () -> Unit,
     navigateToDetail: (String) -> Unit,
-    onToggle: (String) -> Unit
+    onToggle: (String) -> Unit,
+    nativeAdApiViewFactory: NativeAdApiViewFactory
 ) {
     Box(modifier = modifier.windowInsetsPadding(WindowInsets.statusBars)) {
 
@@ -66,10 +70,11 @@ fun MoviesAppContent(
         when (uiState) {
             is UiState.Success -> {
                 MoviesList(
-                    movies = uiState.movies,
+                    movies = uiState.itemsList,
                     emailLazyListState = moviesLazyListState,
                     modifier = modifier, navigateToDetail = navigateToDetail,
-                    onToggle = onToggle
+                    onToggle = onToggle,
+                    nativeAdApiViewFactory = nativeAdApiViewFactory
                 )
                 MovieDetailsScreen(
                     uiState.openedMovie,

@@ -1,6 +1,7 @@
 package com.example.searchmoviesapp.di.modules
 
 import com.example.adsdkapi.InterstitialAdApiPreparer
+import com.example.adsdkapi.NativeAdsRepository
 import com.example.domain.ad.InterstitialAdUseCase
 import com.example.domain.ad.LaunchCounter
 import com.example.domain.movies.Repository
@@ -17,9 +18,14 @@ import dagger.hilt.android.scopes.ViewModelScoped
 class UseCasesModule {
     @Provides
     @ViewModelScoped
-    fun provideSearchMoviesUseCase(repository: Repository): SearchMoviesUseCase =
-        SearchMoviesUseCase(repository)
-
+    fun provideSearchMoviesUseCase(
+        repository: Repository,
+        nativeAdsRepository: NativeAdsRepository
+    ): SearchMoviesUseCase =
+        SearchMoviesUseCase(
+            repository,
+            nativeAdsRepository
+        )
     @Provides
     @ViewModelScoped
     fun provideToggleFavoritesUseCase(repository: Repository): ToggleFavoriteUseCase =
