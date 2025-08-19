@@ -5,7 +5,7 @@ import android.app.UiModeManager
 import android.content.Context
 import android.os.Build
 import android.view.Window
-import android.view.WindowInsets
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -249,6 +249,7 @@ private val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 fun isContrastAvailable(): Boolean {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 }
@@ -315,17 +316,9 @@ fun ContrastAwareTheme(
 
 @Suppress("DEPRECATION")
 fun setStatusBarColor(window: Window, color: Int) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) { // Android 15+
-        window.decorView.setOnApplyWindowInsetsListener { view, insets ->
-            val statusBarInsets = insets.getInsets(WindowInsets.Type.statusBars())
-            view.setBackgroundColor(color)
-
-            // Adjust padding to avoid overlap
-            view.setPadding(0, statusBarInsets.top, 0, 0)
-            insets
-        }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+        window.decorView.setBackgroundColor(color)
     } else {
-        // For Android 14 and below
         window.statusBarColor = color
     }
 }
