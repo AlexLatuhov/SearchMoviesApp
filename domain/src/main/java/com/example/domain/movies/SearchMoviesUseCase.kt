@@ -6,11 +6,16 @@ import com.example.domain.DomainListItem
 import com.example.domain.ResponseResultDomain
 import com.example.domain.toDomainListItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.shareIn
 
 
 private const val ITEM_COUNTS_TO_TRIGGER_AD = 3
@@ -46,45 +51,46 @@ class SearchMoviesUseCase(
      *   - Error(message) on failure.
      */
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun searchMovies(query: String): Flow<ResponseResultDomain> {
-        return repository.searchMovies(query).flatMapLatest { responseResult ->
-            when (responseResult) {
-                is ResponseResult.Success -> {
-                    handleSuccessResult(responseResult.searchResult)
-                }
+    fun searchMovies(query: String): Flow<ResponseResultDomain> = flow {
+        coroutineScope {
+            val adsShared: SharedFlow<NativeAdState> = nativeAdsRepository
+                .provideTwoAds()
+                .distinctUntilChanged()
+                .onStart { emit(NativeAdState.None) }
+                .shareIn(this, SharingStarted.Eagerly, replay = 1)
 
-                is ResponseResult.Error -> flowOf(ResponseResultDomain.Error(responseResult.message))
+            val combined: Flow<ResponseResultDomain> = combine(
+                repository.searchMovies(query),
+                adsShared
+            ) { responseResult, nativeAdState ->
+                when (responseResult) {
+                    is ResponseResult.Success -> addNativeAds(responseResult, nativeAdState)
+                    is ResponseResult.Error -> ResponseResultDomain.Error(responseResult.message)
+                }
             }
-        }.catch { emit(ResponseResultDomain.Error(it.message)) }
+            emitAll(combined)
+        }
     }
 
-    private fun handleSuccessResult(movies: List<MovieDomainEntity>): Flow<ResponseResultDomain> {
-        return if (movies.size > ITEM_COUNTS_TO_TRIGGER_AD) {
-            nativeAdsRepository.provideTwoAds().map { nativeAdState ->
-                movies.map { it.toDomainListItem() as DomainListItem }
-                    .toMutableList().apply {
-                        when (nativeAdState) {
-                            is NativeAdState.NativeAdsLoaded -> {
-                                add(
-                                    AD_INDEX1,
-                                    DomainListItem.NativeAdListItem(nativeAdState.loadedAds.first)
-                                )
-                                add(
-                                    AD_INDEX3,
-                                    DomainListItem.NativeAdListItem(nativeAdState.loadedAds.second)
-                                )
-                            }
-
-                            else -> {}
-                        }
-                    }.let {
-                        ResponseResultDomain.Success(it)
-                    }
+    private fun addNativeAds(
+        responseResult: ResponseResult.Success,
+        nativeAdState: NativeAdState
+    ): ResponseResultDomain {
+        val movies = responseResult.searchResult
+        val baseList =
+            movies.map { it.toDomainListItem() as DomainListItem }.toMutableList()
+        if (movies.size > ITEM_COUNTS_TO_TRIGGER_AD && nativeAdState is NativeAdState.NativeAdsLoaded) {
+            baseList.apply {
+                add(
+                    AD_INDEX1,
+                    DomainListItem.NativeAdListItem(nativeAdState.loadedAds.first)
+                )
+                add(
+                    AD_INDEX3,
+                    DomainListItem.NativeAdListItem(nativeAdState.loadedAds.second)
+                )
             }
-        } else {
-            flowOf(ResponseResultDomain.Success(movies.map {
-                it.toDomainListItem()
-            }))
         }
+        return ResponseResultDomain.Success(baseList)
     }
 }
