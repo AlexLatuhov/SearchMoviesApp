@@ -15,13 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.concurrent.LinkedBlockingQueue
 
-private const val NATIVE_AD_UNIT_ID = BuildConfig.ADMOB_NATIVE_AD
-private const val MAX_ADS_COUNT = 5
-private const val NEEDED_ADS_AMOUNT = 2
-private const val PRELOAD_CYCLE_BREAK_IN_MS = 500L
-
 class NativeAdMobRepository(context: Context) : NativeAdsRepository {
-
     var failed = 0
     val preparedAds = LinkedBlockingQueue<NativeAd>()
     val adLoader = AdLoader.Builder(context, NATIVE_AD_UNIT_ID).forNativeAd { nativeAd ->
@@ -64,4 +58,12 @@ class NativeAdMobRepository(context: Context) : NativeAdsRepository {
                 delay(PRELOAD_CYCLE_BREAK_IN_MS)
             } while (!isEmitted)
         }
+
+    private companion object {
+        private const val NATIVE_AD_UNIT_ID = BuildConfig.ADMOB_NATIVE_AD
+        private const val MAX_ADS_COUNT = 5
+        private const val NEEDED_ADS_AMOUNT = 2
+        private const val PRELOAD_CYCLE_BREAK_IN_MS = 500L
+
+    }
 }
