@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
@@ -55,7 +54,6 @@ class SearchMoviesUseCase(
         coroutineScope {
             val adsShared: SharedFlow<NativeAdState> = nativeAdsRepository
                 .provideTwoAds()
-                .distinctUntilChanged()
                 .onStart { emit(NativeAdState.None) }
                 .shareIn(this, SharingStarted.Eagerly, replay = 1)
 
