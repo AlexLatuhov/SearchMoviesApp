@@ -1,21 +1,17 @@
 package com.example.presentation.moviedetails
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.presentation.MovieUiEntity
-import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
 fun MovieDetailsScreen(
@@ -23,40 +19,31 @@ fun MovieDetailsScreen(
     onClose: () -> Unit,
     onToggle: (String) -> Unit,
 ) {
-    var visible by remember { mutableStateOf(openedMovie != null) }
-    LaunchedEffect(openedMovie) {
-        visible = openedMovie != null
+    if (openedMovie == null) {
+        return
     }
 
-    val state = remember { MutableTransitionState(visible) }
-    LaunchedEffect(visible) { state.targetState = visible }
-
-    LaunchedEffect(state) {
-        snapshotFlow { state.isIdle && !state.targetState }
-            .distinctUntilChanged()
-            .collect { finished ->
-                if (finished) {
-                    onClose.invoke()
-                }
-            }
-    }
-
-    if (openedMovie != null) {
-        BackHandler {
-            visible = false
-        }
-    }
-
-    AnimatedVisibility(
-        visibleState = state,
-        enter = fadeIn() + slideInVertically(initialOffsetY = { it / 2 }),
-        exit = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 }),
+    Dialog(
+        onDismissRequest = {
+            onClose()
+        },
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false,
+            dismissOnBackPress = true,
+            dismissOnClickOutside = true
+        )
     ) {
-        openedMovie?.let { movie ->
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier
+                .wrapContentWidth()
+                .wrapContentHeight()
+                .padding(16.dp),
+            elevation = CardDefaults.cardElevation(8.dp)
+        ) {
             MovieDetails(
-                movie = movie, onBackPressed = {
-                    visible = false
-                },
+                movie = openedMovie,
+                onBackPressed = { onClose() },
                 onToggle = { onToggle(openedMovie.imdbID) }
             )
         }

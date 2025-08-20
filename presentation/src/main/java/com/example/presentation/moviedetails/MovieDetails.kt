@@ -2,11 +2,7 @@ package com.example.presentation.moviedetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,13 +19,12 @@ fun MovieDetails(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
+            .wrapContentSize()
             .background(MaterialTheme.colorScheme.inverseOnSurface),
     ) {
         AppBarWithBack(movie.title) {
             onBackPressed()
         }
         MovieDetailsItem(movie = movie, onToggle = onToggle)
-        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
     }
 }

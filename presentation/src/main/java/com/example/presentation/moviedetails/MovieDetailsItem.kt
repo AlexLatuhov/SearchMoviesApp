@@ -23,9 +23,8 @@ fun MovieDetailsItem(
     movie: MovieUiEntity, modifier: Modifier = Modifier,
     onToggle: () -> Unit
 ) {
-
     Card(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+        modifier = modifier.padding(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         ),
