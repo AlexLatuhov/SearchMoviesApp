@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 
@@ -11,13 +12,18 @@ import kotlinx.coroutines.flow.Flow
 interface FavoriteMovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(favorite: FavoriteMovieEntity)
+    suspend fun insertIgnore(favorite: FavoriteMovieEntity): Long
 
     @Query("DELETE FROM favorite_movies WHERE imdbID = :id")
-    suspend fun deleteById(id: String)
+    suspend fun deleteById(id: String): Int
 
-    @Query("SELECT COUNT(*) FROM favorite_movies WHERE imdbID = :id")
-    suspend fun isFavoriteOnce(id: String): Int
+    @Transaction
+    suspend fun toggleFavorite(id: String) {
+        val insertResult = insertIgnore(FavoriteMovieEntity(id))
+        if (insertResult < 0) {
+            deleteById(id)
+        }
+    }
 
 
     @Query("SELECT imdbID FROM favorite_movies WHERE imdbID IN (:ids)")

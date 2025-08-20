@@ -43,11 +43,7 @@ class RepositoryImpl(
     }
 
     override suspend fun toggleFavorite(itemId: String) {
-        if (favoritesRepository.isFavorite(itemId)) {
-            favoritesRepository.removeFavorite(itemId)
-        } else {
-            favoritesRepository.addFavorite(itemId)
-        }
+        favoritesRepository.toggleFavorite(itemId)
     }
 }
 
