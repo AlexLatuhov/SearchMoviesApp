@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavoriteMovieDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertIgnore(favorite: FavoriteMovieEntity): Long
 
     @Query("DELETE FROM favorite_movies WHERE imdbID = :id")
