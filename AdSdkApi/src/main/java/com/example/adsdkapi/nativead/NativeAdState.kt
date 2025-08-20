@@ -1,4 +1,4 @@
-package com.example.adsdkapi
+package com.example.adsdkapi.nativead
 
 sealed class NativeAdState {
     class NativeAdsLoaded(val loadedAds: Pair<NativeAdEntity, NativeAdEntity>) : NativeAdState()

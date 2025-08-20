@@ -2,8 +2,8 @@ package com.example.searchmoviesapp.di.modules
 
 import android.content.Context
 import com.example.admobsdk.InterstitialAdMobManager
-import com.example.adsdkapi.InterstitialAdApiDisplay
-import com.example.adsdkapi.InterstitialAdApiPreparer
+import com.example.adsdkapi.interstitial.InterstitialAdApiDisplay
+import com.example.adsdkapi.interstitial.InterstitialAdApiPreparer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.example.adsdkapi.NativeAdApiViewFactory
+import com.example.adsdkapi.nativead.NativeAdApiViewFactory
 import com.example.presentation.SearchMovieUiListItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

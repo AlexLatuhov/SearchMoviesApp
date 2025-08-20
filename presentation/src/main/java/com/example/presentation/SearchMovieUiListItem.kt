@@ -1,6 +1,6 @@
 package com.example.presentation
 
-import com.example.adsdkapi.NativeAdEntity
+import com.example.adsdkapi.nativead.NativeAdEntity
 import com.example.domain.DomainListItem
 
 sealed class SearchMovieUiListItem() {

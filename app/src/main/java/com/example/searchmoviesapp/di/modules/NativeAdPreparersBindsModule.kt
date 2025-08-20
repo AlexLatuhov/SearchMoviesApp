@@ -3,8 +3,8 @@ package com.example.searchmoviesapp.di.modules
 import android.content.Context
 import com.example.admobsdk.NativeAdMobRepository
 import com.example.admobsdk.NativeAdMobViewFactory
-import com.example.adsdkapi.NativeAdApiViewFactory
-import com.example.adsdkapi.NativeAdsRepository
+import com.example.adsdkapi.nativead.NativeAdApiViewFactory
+import com.example.adsdkapi.nativead.NativeAdsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

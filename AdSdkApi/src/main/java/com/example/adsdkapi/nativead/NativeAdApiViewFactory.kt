@@ -1,4 +1,4 @@
-package com.example.adsdkapi
+package com.example.adsdkapi.nativead
 
 import android.content.Context
 import android.view.View

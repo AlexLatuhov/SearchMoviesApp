@@ -1,6 +1,6 @@
 package com.example.domain
 
-import com.example.adsdkapi.NativeAdEntity
+import com.example.adsdkapi.nativead.NativeAdEntity
 import com.example.domain.movies.MovieDomainEntity
 
 sealed class DomainListItem() {

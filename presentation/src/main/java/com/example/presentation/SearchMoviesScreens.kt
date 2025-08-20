@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.adsdkapi.NativeAdApiViewFactory
+import com.example.adsdkapi.nativead.NativeAdApiViewFactory
 import com.example.presentation.moviedetails.MovieDetailsScreen
 import com.example.presentation.movieslist.MoviesList
 import com.example.presentation.movieslist.MoviesSearchBar
@@ -102,5 +102,4 @@ fun MoviesAppContent(
             }
         }
     }
-
 }

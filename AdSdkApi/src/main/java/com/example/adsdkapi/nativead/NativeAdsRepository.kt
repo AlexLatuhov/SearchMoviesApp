@@ -1,4 +1,4 @@
-package com.example.adsdkapi
+package com.example.adsdkapi.nativead
 
 import kotlinx.coroutines.flow.Flow
 

@@ -1,6 +1,6 @@
 package com.example.domain.ad
 
-import com.example.adsdkapi.InterstitialAdState
+import com.example.adsdkapi.interstitial.InterstitialAdState
 
 sealed class InterstitialAdDomainState {
     object None : InterstitialAdDomainState()

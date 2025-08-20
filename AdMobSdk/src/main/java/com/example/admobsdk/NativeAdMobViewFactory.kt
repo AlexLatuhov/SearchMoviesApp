@@ -7,8 +7,8 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.adsdkapi.NativeAdApiViewFactory
-import com.example.adsdkapi.NativeAdEntity
+import com.example.adsdkapi.nativead.NativeAdApiViewFactory
+import com.example.adsdkapi.nativead.NativeAdEntity
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView

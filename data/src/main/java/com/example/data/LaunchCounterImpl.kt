@@ -8,13 +8,10 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.domain.ad.LaunchCounter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
-import javax.inject.Singleton
 
-val Context.dataStore by preferencesDataStore("app_prefs")
+private val Context.dataStore by preferencesDataStore("app_prefs")
 
-@Singleton
-class LaunchCounterImpl @Inject constructor(private val context: Context) : LaunchCounter {
+class LaunchCounterImpl(private val context: Context) : LaunchCounter {
 
     private val key = intPreferencesKey("launch_count_test")
 

@@ -1,4 +1,4 @@
-package com.example.adsdkapi
+package com.example.adsdkapi.interstitial
 
 import android.app.Activity
 

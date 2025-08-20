@@ -3,8 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-
-    id("kotlin-kapt")
 }
 
 android {
@@ -44,15 +42,10 @@ dependencies {
     implementation(project(":remoterepository"))
     implementation(project(":localrepository"))
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    implementation(libs.hilt.navigation.compose)
-
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

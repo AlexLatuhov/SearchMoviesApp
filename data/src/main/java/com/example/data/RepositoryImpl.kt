@@ -11,9 +11,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(
+class RepositoryImpl(
     private val repositoryImpl: OmdbRepository,
     private val favoritesRepository: FavoritesRepository
 ) : Repository {

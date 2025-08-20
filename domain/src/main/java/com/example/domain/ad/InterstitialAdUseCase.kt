@@ -1,7 +1,7 @@
 package com.example.domain.ad
 
-import com.example.adsdkapi.InterstitialAdApiPreparer
-import com.example.adsdkapi.InterstitialAdState
+import com.example.adsdkapi.interstitial.InterstitialAdApiPreparer
+import com.example.adsdkapi.interstitial.InterstitialAdState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

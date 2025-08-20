@@ -1,7 +1,7 @@
 package com.example.searchmoviesapp.di.modules
 
-import com.example.adsdkapi.InterstitialAdApiPreparer
-import com.example.adsdkapi.NativeAdsRepository
+import com.example.adsdkapi.interstitial.InterstitialAdApiPreparer
+import com.example.adsdkapi.nativead.NativeAdsRepository
 import com.example.domain.ad.InterstitialAdUseCase
 import com.example.domain.ad.LaunchCounter
 import com.example.domain.movies.Repository
@@ -15,7 +15,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class UseCasesModule {
+class MoviesScreensUseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideSearchMoviesUseCase(

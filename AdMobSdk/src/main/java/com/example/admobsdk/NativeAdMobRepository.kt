@@ -1,30 +1,26 @@
 package com.example.admobsdk
 
 import android.content.Context
-import com.example.adsdkapi.NativeAdEntity
-import com.example.adsdkapi.NativeAdState
-import com.example.adsdkapi.NativeAdsRepository
+import com.example.adsdkapi.nativead.NativeAdEntity
+import com.example.adsdkapi.nativead.NativeAdState
+import com.example.adsdkapi.nativead.NativeAdsRepository
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.concurrent.LinkedBlockingQueue
-import javax.inject.Inject
 
 private const val NATIVE_AD_UNIT_ID = BuildConfig.ADMOB_NATIVE_AD
 private const val MAX_ADS_COUNT = 5
 private const val NEEDED_ADS_AMOUNT = 2
 private const val PRELOAD_CYCLE_BREAK_IN_MS = 500L
 
-class NativeAdMobRepository @Inject constructor(
-    @param:ApplicationContext private val context: Context
-) : NativeAdsRepository {
+class NativeAdMobRepository(context: Context) : NativeAdsRepository {
 
     var failed = 0
     val preparedAds = LinkedBlockingQueue<NativeAd>()

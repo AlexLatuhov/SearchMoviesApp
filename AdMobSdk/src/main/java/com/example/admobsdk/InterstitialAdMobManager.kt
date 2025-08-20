@@ -2,9 +2,9 @@ package com.example.admobsdk
 
 import android.app.Activity
 import android.content.Context
-import com.example.adsdkapi.InterstitialAdApiDisplay
-import com.example.adsdkapi.InterstitialAdApiPreparer
-import com.example.adsdkapi.InterstitialAdState
+import com.example.adsdkapi.interstitial.InterstitialAdApiDisplay
+import com.example.adsdkapi.interstitial.InterstitialAdApiPreparer
+import com.example.adsdkapi.interstitial.InterstitialAdState
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -12,11 +12,10 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import javax.inject.Inject
 
-const val INTERSTITIAL_AD_UNIT_ID = BuildConfig.ADMOB_INTERSTITIAL_ID
+private const val INTERSTITIAL_AD_UNIT_ID = BuildConfig.ADMOB_INTERSTITIAL_ID
 
-class InterstitialAdMobManager @Inject constructor(
+class InterstitialAdMobManager(
     private val context: Context
 ) : InterstitialAdApiDisplay, InterstitialAdApiPreparer {
     private var interstitial: InterstitialAd? = null

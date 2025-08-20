@@ -1,7 +1,7 @@
 package com.example.domain.movies
 
-import com.example.adsdkapi.NativeAdState
-import com.example.adsdkapi.NativeAdsRepository
+import com.example.adsdkapi.nativead.NativeAdState
+import com.example.adsdkapi.nativead.NativeAdsRepository
 import com.example.domain.DomainListItem
 import com.example.domain.ResponseResultDomain
 import com.example.domain.toDomainListItem
@@ -11,14 +11,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 
 private const val ITEM_COUNTS_TO_TRIGGER_AD = 3
 private const val AD_INDEX1 = 1
 private const val AD_INDEX3 = 3
 
-class SearchMoviesUseCase @Inject constructor(
+class SearchMoviesUseCase(
     private val repository: Repository, private val nativeAdsRepository: NativeAdsRepository
 ) {
 
