@@ -77,7 +77,7 @@ class SearchMoviesUseCase(
         val movies = responseResult.searchResult
         val baseList =
             movies.map { it.toDomainListItem() as DomainListItem }.toMutableList()
-        if (movies.size > ITEM_COUNTS_TO_TRIGGER_AD && nativeAdState is NativeAdState.NativeAdsLoaded) {
+        if (movies.size >= ITEM_COUNTS_TO_TRIGGER_AD && nativeAdState is NativeAdState.NativeAdsLoaded) {
             baseList.apply {
                 add(
                     AD_INDEX1,
