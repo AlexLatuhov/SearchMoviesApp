@@ -17,10 +17,34 @@ private const val ITEM_COUNTS_TO_TRIGGER_AD = 3
 private const val AD_INDEX1 = 1
 private const val AD_INDEX3 = 3
 
+/**
+ * Searching movies and optionally inserting native ads into the result list.
+ *
+ * Algorithm:
+ * 1) Delegates search to [Repository.searchMovies] (it's a Repository having remote and external ones, mixing their data together).
+ * 2) On success:
+ *    - If movie count > [ITEM_COUNTS_TO_TRIGGER_AD], requests two native ads and inserts them at [AD_INDEX1] and [AD_INDEX3]
+ *      (if ads are actually loaded).
+ *    - Otherwise, returns the list of movies.
+ * 3) On any error — returns [ResponseResultDomain.Error].
+ *
+ * Reactive behavior:
+ * - Uses flatMapLatest: a new search cancels the previous one.
+ * - When ads load from [nativeAdsRepository], the resulting list may re-emit with ads inserted.
+ *
+ * @property repository Data source for movies.
+ * @property nativeAdsRepository Provider of native ads to be inserted into lists.
+ */
 class SearchMoviesUseCase(
     private val repository: Repository, private val nativeAdsRepository: NativeAdsRepository
 ) {
 
+    /**
+     * @param query The search query, text input from user
+     * @return Cold [Flow] emitting [ResponseResultDomain]:
+     *   - Success(List<DomainListItem>) with optional [com.example.domain.DomainListItem.NativeAdListItem] insertions;
+     *   - Error(message) on failure.
+     */
     @OptIn(ExperimentalCoroutinesApi::class)
     fun searchMovies(query: String): Flow<ResponseResultDomain> {
         return repository.searchMovies(query).flatMapLatest { responseResult ->

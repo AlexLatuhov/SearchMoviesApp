@@ -10,6 +10,22 @@ import kotlinx.coroutines.flow.map
 
 private const val COUNTS_TO_TRIGGER_AD = 2
 
+/**
+ * Handling interstitial ad preload.
+ *
+ * Observes the app launch counter and triggers interstitial ad loading
+ * through [InterstitialAdApiPreparer] once the threshold [COUNTS_TO_TRIGGER_AD] is reached.
+ *
+ * Behavior:
+ * - Re-subscribes whenever the launch count changes (flatMapLatest).
+ * - Emits [InterstitialAdState.Ready] when the threshold is reached and Ad is ready.
+ * - Emits [InterstitialAdState.Ready] in any other case (error, loading).
+ *
+ * Concurrency/Threading - cold flow: work starts only upon collect().
+ *
+ * @property interstitialAdApi API for loading interstitial ads.
+ * @property launchCounter Source of app launch count.
+ */
 class InterstitialAdUseCase(
     private val interstitialAdApi: InterstitialAdApiPreparer,
     private val launchCounter: LaunchCounter
