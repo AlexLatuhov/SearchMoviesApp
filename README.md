@@ -63,7 +63,9 @@ Create a *local.properties* in the repository root (add to *.gitignore*) and add
 
 **Important:** Use AdMob test IDs during development. Replace with production IDs only for release builds.
 
-🧪 **Tests** 
+🧪 **Tests**  
+`InterstitialAdUseCaseTest` and `SearchMoviesUseCaseTest` are Unit tests for business logic - error handling, inserting native ads based on movies list size, inserting intertetial ads base on app launch count
+Also, there is `FavoriteMovieDaoInstrumentedTest` instrumented test to check that toggleFavorite works as expected
 
 ♻️ **How to extend / add another ad provider**
 
