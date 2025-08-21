@@ -43,7 +43,10 @@ dependencies {
     implementation(project(":AdSdkApi"))
 
     implementation(libs.androidx.core.ktx)
+
+    testImplementation(libs.test.mockk)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.test.core.testing)
+    testImplementation(kotlin("test"))
 }
