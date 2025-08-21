@@ -60,10 +60,5 @@ android {
 
 dependencies {
     implementation(project(":AdSdkApi"))
-
     implementation(libs.play.services.ads)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

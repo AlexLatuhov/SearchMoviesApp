@@ -43,10 +43,5 @@ dependencies {
     implementation(project(":localrepository"))
 
     implementation(libs.androidx.datastore.preferences)
-
     implementation(libs.androidx.core.ktx)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
